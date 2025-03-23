@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Biblioteca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Gestión de Biblioteca</h2>
+        <input type="text" id="titulo" placeholder="Título del libro">
+        <input type="text" id="autor" placeholder="Autor">
+        <button onclick="agregarLibro()">Agregar Libro</button>
+        
+        <h3>Lista de Libros</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="listaLibros"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let libros = [];
+        
+        function agregarLibro() {
+            let titulo = document.getElementById('titulo').value;
+            let autor = document.getElementById('autor').value;
+            
+            if (titulo === '' || autor === '') {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+            
+            let libro = { titulo, autor };
+            libros.push(libro);
+            mostrarLibros();
+            document.getElementById('titulo').value = '';
+            document.getElementById('autor').value = '';
+        }
+        
+        function mostrarLibros() {
+            let lista = document.getElementById('listaLibros');
+            lista.innerHTML = '';
+            
+            libros.forEach((libro, index) => {
+                let row = `<tr>
+                    <td>${libro.titulo}</td>
+                    <td>${libro.autor}</td>
+                    <td><button onclick="eliminarLibro(${index})">Eliminar</button></td>
+                </tr>`;
+                lista.innerHTML += row;
+            });
+        }
+        
+        function eliminarLibro(index) {
+            libros.splice(index, 1);
+            mostrarLibros();
+        }
+    </script>
+</body>
+</html>
